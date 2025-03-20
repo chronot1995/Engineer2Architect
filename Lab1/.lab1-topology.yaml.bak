@@ -1,5 +1,5 @@
 ---
-name: clab_lab1
+name: lab1
 #version: 1.0.0
 #description: >
 #  This is the topology used for Lab 1.
@@ -26,6 +26,8 @@ topology:
       kind: ceos
       image: ceos:4.33.1-EFT3
       mgmt-ipv4: 192.168.121.13
+#      ports:
+#        - 2222:22
     campus-law-01:
       kind: ceos
       image: ceos:4.33.1-EFT3

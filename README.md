@@ -45,3 +45,9 @@ https://containerlab.dev/community/#discord
 Claude AI - Sonnet 3.7 http://www.claude.ai
 Github Copilot https://github.com/features/copilot
 VSCode https://code.visualstudio.com
+
+https://www.packetswitch.co.uk/running-containerlab-in-macos-cisco-iol-ceos-2/
+
+https://github.com/srl-labs/containerlab/blob/main/docs/manual/kinds/ceos.md
+
+https://arista-netdevops-community.github.io/avd-cEOS-Lab/quickStart/
