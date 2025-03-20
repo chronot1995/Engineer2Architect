@@ -12,11 +12,11 @@ topology:
   nodes:
     isp-edge-1:
       kind: linux
-      image: frrouting/frr:10.1.3
+      image: frr:10.1.3
       mgmt-ipv4: 192.168.100.10
     campus-edge-1:
       kind: linux
-      image: frrouting/frr:10.1.3
+      image: frr:10.1.3
       mgmt-ipv4: 192.168.100.11
     campus-dorms-01:
       kind: ceos
@@ -39,11 +39,9 @@ topology:
       image: manios/nagios:4.5.9
 
   links:
-    - endpoints: ["isp-edge-1:eth1", "campus-edge-1:eth"]
-    - endpoints: ["campus-edge-1:eth2", "campus-dorms-01:Ethernet0/1"]
-    - endpoints:
-        ["campus-dorms-01:Ethernet0/2", "campus-library-01:Ethernet0/2"]
-    - endpoints: ["campus-dorms-01:Ethernet0/3", "campus-law-01:Ethernet0/3"]
-    - endpoints:
-        ["campus-dorms-01:Ethernet0/4", "campus-datacenter-01:Ethernet0/4"]
+    - endpoints: ["isp-edge-1:eth1", "campus-edge-1:eth1"]
+    - endpoints: ["campus-edge-1:eth2", "campus-dorms-01:eth1"]
+    - endpoints: ["campus-dorms-01:eth2", "campus-library-01:eth2"]
+    - endpoints: ["campus-dorms-01:eth3", "campus-law-01:eth3"]
+    - endpoints: ["campus-dorms-01:eth4", "campus-datacenter-01:eth4"]
     - endpoints: ["nagios:eth1", "campus-datacenter-01:Ethernet0/11"]
