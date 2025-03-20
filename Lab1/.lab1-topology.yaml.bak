@@ -1,0 +1,49 @@
+---
+name: clab_lab1
+#version: 1.0.0
+#description: >
+#  This is the topology used for Lab 1.
+
+mgmt:
+  network: mgmt
+  ipv4-subnet: 192.168.121.0/24
+
+topology:
+  nodes:
+    isp-edge-1:
+      kind: linux
+      image: frrouting/frr:10.1.3
+      mgmt-ipv4: 192.168.100.10
+    campus-edge-1:
+      kind: linux
+      image: frrouting/frr:10.1.3
+      mgmt-ipv4: 192.168.100.11
+    campus-dorms-01:
+      kind: ceos
+      image: ceos:4.33.1-EFT3
+      mgmt-ipv4: 192.168.100.12
+    campus-library-01:
+      kind: ceos
+      image: ceos:4.33.1-EFT3
+      mgmt-ipv4: 192.168.100.13
+    campus-law-01:
+      kind: ceos
+      image: ceos:4.33.1-EFT3
+      mgmt-ipv4: 192.168.100.14
+    campus-datacenter-01:
+      kind: ceos
+      image: ceos:4.33.1-EFT3
+      mgmt-ipv4: 192.168.100.15
+    nagios:
+      kind: linux
+      image: manios/nagios:4.5.9
+
+  links:
+    - endpoints: ["isp-edge-1:eth1", "campus-edge-1:eth"]
+    - endpoints: ["campus-edge-1:eth2", "campus-dorms-01:Ethernet0/1"]
+    - endpoints:
+        ["campus-dorms-01:Ethernet0/2", "campus-library-01:Ethernet0/2"]
+    - endpoints: ["campus-dorms-01:Ethernet0/3", "campus-law-01:Ethernet0/3"]
+    - endpoints:
+        ["campus-dorms-01:Ethernet0/4", "campus-datacenter-01:Ethernet0/4"]
+    - endpoints: ["nagios:eth1", "campus-datacenter-01:Ethernet0/11"]
