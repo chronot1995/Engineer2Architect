@@ -13,30 +13,35 @@ topology:
     isp-edge-1:
       kind: linux
       image: quay.io/frrouting/frr:10.1.3
-      mgmt-ipv4: 192.168.100.10
+      mgmt-ipv4: 192.168.121.10
     campus-edge-1:
       kind: linux
       image: quay.io/frrouting/frr:10.1.3
-      mgmt-ipv4: 192.168.100.11
+      mgmt-ipv4: 192.168.121.11
     campus-dorms-01:
       kind: ceos
       image: ceos:4.33.1-EFT3
-      mgmt-ipv4: 192.168.100.12
+      mgmt-ipv4: 192.168.121.12
     campus-library-01:
       kind: ceos
       image: ceos:4.33.1-EFT3
-      mgmt-ipv4: 192.168.100.13
+      mgmt-ipv4: 192.168.121.13
     campus-law-01:
       kind: ceos
       image: ceos:4.33.1-EFT3
-      mgmt-ipv4: 192.168.100.14
+      mgmt-ipv4: 192.168.121.14
     campus-datacenter-01:
       kind: ceos
       image: ceos:4.33.1-EFT3
-      mgmt-ipv4: 192.168.100.15
+      mgmt-ipv4: 192.168.121.15
     nagios:
       kind: linux
       image: manios/nagios:4.5.9
+      ports:
+        - 8080:80
+      exec:
+        - ip link set dev eth1 address aa:bb:16:16:16:16
+        - ip addr add 192.168.121.16/24 dev eth1
 
   links:
     - endpoints: ["isp-edge-1:eth1", "campus-edge-1:eth1"]
@@ -44,4 +49,4 @@ topology:
     - endpoints: ["campus-dorms-01:eth2", "campus-library-01:eth2"]
     - endpoints: ["campus-dorms-01:eth3", "campus-law-01:eth3"]
     - endpoints: ["campus-dorms-01:eth4", "campus-datacenter-01:eth4"]
-    - endpoints: ["nagios:eth1", "campus-datacenter-01:Ethernet0/11"]
+    - endpoints: ["nagios:eth1", "campus-datacenter-01:eth11"]
