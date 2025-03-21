@@ -33,7 +33,7 @@ topology:
       kind: ceos
       mgmt-ipv4: 192.168.121.13
     #      ports:
-    #        - 2222:22
+    #        - 2222:222
     campus-law-01:
       kind: ceos
       mgmt-ipv4: 192.168.121.14
@@ -45,9 +45,16 @@ topology:
       image: manios/nagios:4.5.9
       ports:
         - 8080:80
+      binds:
+        - nagios.cfg:/opt/nagios/etc/nagios.cfg
+        - lab.cfg:/opt/nagios/etc/objects/lab.cfg
       exec:
         - ip link set dev eth1 address aa:bb:16:16:16:16
         - ip addr add 192.168.121.16/24 dev eth1
+#        - echo 'NagiosAdmin!' | passwd --stdin root
+#        - apk add openssh
+#        - ssh-keygen -A
+#        - exec /usr/sbin/sshd -D -e "$@" &
 
   links:
     - endpoints: ["isp-edge-1:eth1", "campus-edge-1:eth1"]

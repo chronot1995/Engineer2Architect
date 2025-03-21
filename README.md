@@ -34,6 +34,10 @@ docker import cEOSarm-lab-4.33.1-EFT3.tar.xz ceos:4.33.1-EFT3
 
 This overall work was based on my past work at Nvidia and Cumulus Networks. I wasn't "vibe coding" this by anymeans, and I did ask Claude and CoPilot on the best way to refine the Ansible and Python in this project and it was super helpful.
 
+### Validate Configuratoin
+
+```ping vrf MGMT ip 192.168.121.14```
+
 ### Miscellaneous and Tools:
 
 Containerlab - https://containerlab.dev

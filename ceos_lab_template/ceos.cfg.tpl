@@ -26,4 +26,9 @@ management api http-commands
    vrf MGMT
       no shutdown
 !
+management ssh
+   server-port 222
+   !
+   vrf MGMT
+!
 end
