@@ -2,7 +2,7 @@
 
 # ContainerLab Lab Specific files
 clab-*/
-*.yaml.bak
+*.bak
 
 # Compiled source #
 ###################

@@ -1,5 +1,6 @@
 {
-  "image": "ghcr.io/srl-labs/containerlab/devcontainer-dood-slim:latest",
+  //  "image": "ghcr.io/srl-labs/containerlab/devcontainer-dood-slim:latest",
+  "image": "ghcr.io/srl-labs/containerlab/devcontainer-dood:latest",
   "runArgs": ["--network=host", "--pid=host", "--privileged"],
   "mounts": [
     "type=bind,src=/var/lib/docker,dst=/var/lib/docker",

@@ -18,13 +18,12 @@ topology:
         - FastCli -p 15 -c 'security pki key generate rsa 4096 eAPI.key'
         - FastCli -p 15 -c 'security pki certificate generate self-signed eAPI.crt key eAPI.key generate rsa 4096 validity 30000 parameters common-name eAPI'
   nodes:
-    isp-edge-1:
+    isp-edge-01:
       kind: linux
       image: quay.io/frrouting/frr:10.1.3
       mgmt-ipv4: 192.168.121.10
-    campus-edge-1:
-      kind: linux
-      image: quay.io/frrouting/frr:10.1.3
+    campus-edge-01:
+      kind: ceos
       mgmt-ipv4: 192.168.121.11
     campus-dorms-01:
       kind: ceos
@@ -47,18 +46,18 @@ topology:
         - 8080:80
       binds:
         - nagios.cfg:/opt/nagios/etc/nagios.cfg
-        - lab.cfg:/opt/nagios/etc/objects/lab.cfg
+        - lab1-nagios.cfg:/opt/nagios/etc/objects/lab1-nagios.cfg
       exec:
         - ip link set dev eth1 address aa:bb:16:16:16:16
         - ip addr add 192.168.121.16/24 dev eth1
-#        - echo 'NagiosAdmin!' | passwd --stdin root
-#        - apk add openssh
-#        - ssh-keygen -A
-#        - exec /usr/sbin/sshd -D -e "$@" &
+  #        - echo 'NagiosAdmin!' | passwd --stdin root
+  #        - apk add openssh
+  #        - ssh-keygen -A
+  #        - exec /usr/sbin/sshd -D -e "$@" &
 
   links:
-    - endpoints: ["isp-edge-1:eth1", "campus-edge-1:eth1"]
-    - endpoints: ["campus-edge-1:eth2", "campus-dorms-01:eth1"]
+    - endpoints: ["isp-edge-01:eth1", "campus-edge-01:eth1"]
+    - endpoints: ["campus-edge-01:eth2", "campus-dorms-01:eth1"]
     - endpoints: ["campus-dorms-01:eth2", "campus-library-01:eth2"]
     - endpoints: ["campus-dorms-01:eth3", "campus-law-01:eth3"]
     - endpoints: ["campus-dorms-01:eth4", "campus-datacenter-01:eth4"]

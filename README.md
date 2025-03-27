@@ -2,56 +2,57 @@
 
 ### Summary
 
-This project came to fruition out of a discussion I was having with a buddy who is breaking into networking. One of his questions was how does one grow in this field from a Network Engineer into a Network Architect. This project, the presentation, and the overall design are based on my real-world experience during my first Network Architect job.
+This project came out of a discussion I had with a friend who is starting his networking career. One of his questions was how does one grow in this field from a Network Engineer into a Network Architect. This project, the presentation, and the overall design are based on my real-world experience during my first Network Architect job.
 
-This is the initial design of this project toma
+This is a project in two pieces. First, I will be uploading the Powerpoint and notes that I present as a keynote to the USNUA ((MO)NUG - Kansas City) inaugural KC event on April 10th, 2025.
 
-### Side Notes
+I will use the majority of that event to talk about the soft skills necessary to go from a network engineer to a network architect.
 
-This is the repo used for the KC NUG Keynote Project
+The second piece of the project is to focus on the technical pieces of that journey. This github repo will contain 5 x labs that highlight the technical skills necessary. The first four labs should be complete by the time of the presentation, with the MPLS-based one a week or so after. Ha, I've had to dust off some knowledge to pull that one off.
 
-This repository will be using the Docker outside of Docker method described here:
+Each lab will contain Arista EOS, FRR, and Linux server images in a Containerlab topology using devcontainers. The individual elements will be configured using Ansible within the devcontainer framework. The goal of the labs is to step through the presentation topics on a technical level to reinforce the steps of the journey.
+
+### Table-of-Contents
+
+- [Individual Labs](#Table-of-Contents)
+  - [Lab1](https://github.com/chronot1995/Engineer2Architect/lab1/README.md)
+  - [Lab2](https://github.com/chronot1995/Engineer2Architect/lab2/README.md)
+  - [Lab3](https://github.com/chronot1995/Engineer2Architect/lab3/README.md)
+  - [Lab4](https://github.com/chronot1995/Engineer2Architect/lab4/README.md)
+  - [Lab5](https://github.com/chronot1995/Engineer2Architect/lab5/README.md)
+
+The Powerpoint presentation will eventually be found in the "presentation" folder within the repo.
 
 ### Overall Design
 
-This is the first pass of this project. I used to use Nvidia Air and Vagrant for this type of work before the pandemic. This is my first foray into a complex containerlab configuration.
+### Miscellaneous
 
-https://containerlab.dev/macos/#docker-outside-of-docker-dood
+Here's a list of tools and links that were used to build this project:
 
-and here:
+1. [Containerlab](https://containerlab.dev)
 
-https://youtu.be/Xue1pLiO0qQ?t=603
+The [Containerlab Discord server](https://containerlab.dev/community/#discord) is a great community where you can talk with people who are very passionate about this project
 
-Note:
+2. [VSCode](https://code.visualstudio.com)
 
-docker pull quay.io/frrouting/frr:10.1.3
+3. [Arista Validated Design](https://arista-netdevops-community.github.io/avd-cEOS-Lab/quickStart/)
 
-Installing the image
+AI Tools:
 
-https://containerlab.dev/manual/kinds/ceos/#arista-ceos
+4. [Claude AI - Sonnet 3.7](http://www.claude.ai)
 
-docker import cEOSarm-lab-4.33.1-EFT3.tar.xz ceos:4.33.1-EFT3
+5. [Github Copilot](https://github.com/features/copilot)
 
-This overall work was based on my past work at Nvidia and Cumulus Networks. I wasn't "vibe coding" this by anymeans, and I did ask Claude and CoPilot on the best way to refine the Ansible and Python in this project and it was super helpful.
+Helpful blogs:
 
-### Validate Configuratoin
+6. [Running Containerlab in macOS](https://www.packetswitch.co.uk/running-containerlab-in-macos-cisco-iol-ceos-2/)
 
-```ping vrf MGMT ip 192.168.121.14```
+### Potential Lab Improvements
 
-### Miscellaneous and Tools:
+I am accepting PRs on this repo. Here's a couple that I will aim for in the future:
 
-Containerlab - https://containerlab.dev
+1. Idempotency improvements. Run a diff analysis on the Arista EOS configuration when running the playbooks a second time.
 
-The containerlab Discord server is a great community where you can talk and discuss with people who are very passionate about this project
+Optional:
 
-https://containerlab.dev/community/#discord
-
-Claude AI - Sonnet 3.7 http://www.claude.ai
-Github Copilot https://github.com/features/copilot
-VSCode https://code.visualstudio.com
-
-https://www.packetswitch.co.uk/running-containerlab-in-macos-cisco-iol-ceos-2/
-
-https://github.com/srl-labs/containerlab/blob/main/docs/manual/kinds/ceos.md
-
-https://arista-netdevops-community.github.io/avd-cEOS-Lab/quickStart/
+1. Ansible Vault for passwords, rather than the defaults

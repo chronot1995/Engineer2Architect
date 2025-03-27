@@ -1,8 +1,0 @@
-{
-  "image": "ghcr.io/srl-labs/containerlab/devcontainer-dind-slim:0.66.0",
-  "hostRequirements": {
-    "cpus": 2,
-    "memory": "6gb",
-    "storage": "32gb"
-  }
-}
