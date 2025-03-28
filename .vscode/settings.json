@@ -1,0 +1,9 @@
+{
+  "cSpell.words": [
+    "ceos",
+    "clab"
+  ],
+  "yaml.schemas": {
+    "https://json.schemastore.org/yamllint.json": "file:///Users/mcourtney/Downloads/Reference/Engineer2Architect/Lab1/lab1-topology.yaml"
+  }
+}
