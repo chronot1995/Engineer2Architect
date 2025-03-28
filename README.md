@@ -15,11 +15,11 @@ Each lab will contain Arista EOS, FRR, and Linux server images in a Containerlab
 ### Table-of-Contents
 
 - [Individual Labs](#Table-of-Contents)
-  - [Lab1](https://github.com/chronot1995/Engineer2Architect/lab1/README.md)
-  - [Lab2](https://github.com/chronot1995/Engineer2Architect/lab2/README.md)
-  - [Lab3](https://github.com/chronot1995/Engineer2Architect/lab3/README.md)
-  - [Lab4](https://github.com/chronot1995/Engineer2Architect/lab4/README.md)
-  - [Lab5](https://github.com/chronot1995/Engineer2Architect/lab5/README.md)
+  - [Lab1](https://github.com/chronot1995/Engineer2Architect/blob/main/lab1/README.md)
+  - [Lab2](https://github.com/chronot1995/Engineer2Architect/blob/main/lab2/README.md)
+  - [Lab3](https://github.com/chronot1995/Engineer2Architect/blob/main/lab3/README.md)
+  - [Lab4](https://github.com/chronot1995/Engineer2Architect/blob/main/lab4/README.md)
+  - [Lab5](https://github.com/chronot1995/Engineer2Architect/blob/main/lab5/README.md)
 
 The Powerpoint presentation will eventually be found in the "presentation" folder within the repo.
 
