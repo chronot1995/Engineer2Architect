@@ -1,10 +1,10 @@
-# LAB1
+# LAB2
 
 ### Table-of-Contents
 
-- [LAB1](#lab1)
+- [LAB2](#lab2)
     - [Table-of-Contents](#table-of-contents)
-    - [Lab1 Goals](#lab1-goals)
+    - [Lab2 Goals](#lab2-goals)
     - [Network-Diagram](#network-diagram)
     - [Network-Outline](#network-outline)
     - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
@@ -12,30 +12,15 @@
     - [Ansible-Debugging](#ansible-debugging)
     - [Validate-Configuration](#validate-configuration)
 
-### Lab1 Goals
+### Lab2 Goals
 
-1. Monitoring and Triage
-
-Log into the monitoring system by clicking this [link](https://127.0.0.1:8080)
-
-```
-Username: nagiosadmin
-Password: nagios
-```
-
-Click the "Hosts" on the left-hand side to see what is currently being monitored.
+1. Enable Dynamic Routing on the Lab1 topology
+2. Answer questions regarding this topology
+3. Understand the output in the Nagios monitoring server
 
 Questions:
 
-i. Does the amount of devices you're seeing in Nagios match the [Network Diagram](#Network-Diagram) and [Network Outline](#Network-Outline) below?
-
-ii. Can you adjust the `nagios.cfg` to reflect the true state of the network?
-
-iii. Rebuild the devcontainers and launch them again after you have made this change?
-
-iv. Are all of the devices green?
-
-2. Network Analysis
+i. Network Analysis
 
 SSH into the "campus" devices
 
@@ -44,25 +29,57 @@ Username: admin
 Password: admin
 ```
 
-i. Display the routing table look like on the campus devices?
+ii. Display the routing table look like on the campus devices?
 
 ```
 show route
 ```
 
-ii. Are the campus devices doing dynamic routing? How are they connected together?
+iii. Are the campus devices dynamically routing? How are they connected together?
 
-iii. What may be a limitation of this design?
+iv. Display the OSPF adjacencies using the following command:
 
-iv. If VLAN 555 was looped on campus-law-01, what would that do this topology? And why?
+```
+show ip ospf neighbor
+```
+
+v. Are there now any spanned VLANs in this design? What would happen if there was a loop on the Library router? What would be the fallout? How would that compare to the previous design?
+
+vi. What may be a limitation of this design? Are you able to reach all of the devices in the topology?
+
+vii. Log into the Nagios monitoring system by clicking this [link](https://127.0.0.1:8080)
+
+```
+Username: nagiosadmin
+Password: nagios
+```
+
+Click the "Hosts" on the left-hand side to see what is currently being monitored. Are the currently configured OSPF loopbacks pingable? Why not?
 
 ### Network-Diagram
 
-I found the diagrams from 15 years ago and built the lab diagrams using the same objects and fonts.
-
-[Lab1 Network Diagram](https://github.com/chronot1995/Engineer2Architect/lab1/images/lab1.png)
+[Lab2 Network Diagram](https://github.com/chronot1995/Engineer2Architect/lab2/images/lab2.png)
 
 ### Network-Outline
+
+For this site, we are using the following subnet:
+
+```
+10.137.0.0/16
+```
+
+We are going to be taking the last /24 subnet and using that for our Point-to-Point routed links and hte loopbacks:
+
+```
+10.137.255.0/24
+```
+
+We are then going to split this in half in the following manner:
+
+```
+Point-to-Points: 10.137.255.0/25
+Loopbacks: 10.137.255.128/25
+```
 
 | Router Name          | OOB Management IP | Type        |
 | -------------------- | ----------------- | ----------- |
@@ -74,6 +91,14 @@ I found the diagrams from 15 years ago and built the lab diagrams using the same
 | campus-datacenter-01 | 192.168.121.15    | Arista cEOS |
 | nagios               | 192.168.121.16    | Linux       |
 
+| Router Name          | Loopback IP    | Type        |
+| -------------------- | -------------- | ----------- |
+| campus-edge-01       | 10.137.255.129 | Arista cEOS |
+| campus-dorms-01      | 10.137.255.130 | Arista cEOS |
+| campus-library-01    | 10.137.255.131 | Arista cEOS |
+| campus-law-01        | 10.137.255.132 | Arista cEOS |
+| campus-datacenter-01 | 10.137.255.133 | Arista cEOS |
+
 | Router #1       | PTP-Link #1 | PTP-Link #2 | Router #2            |
 | --------------- | ----------- | ----------- | -------------------- |
 | isp-edge-01     | eth1        | eth1        | campus-edge-01       |
@@ -81,6 +106,14 @@ I found the diagrams from 15 years ago and built the lab diagrams using the same
 | campus-dorms-01 | eth2        | eth2        | campus-library-01    |
 | campus-dorms-01 | eth3        | eth3        | campus-law-01        |
 | campus-dorms-01 | eth4        | eth4        | campus-datacenter-01 |
+
+| Router #1       | PTP-Link IP #1   | PTP-Link IP #2   | Router #2            |
+| --------------- | ---------------- | ---------------- | -------------------- |
+| isp-edge-01     | 192.0.2.1/30  | 192.0.2.2/30  | campus-edge-01       |
+| campus-edge-01  | 10.137.255.1/30  | 10.137.255.2/30  | campus-dorms-01      |
+| campus-dorms-01 | 10.137.255.5/30  | 10.137.255.6/30 | campus-library-01    |
+| campus-dorms-01 | 10.137.255.9/30 | 10.137.255.10/30 | campus-law-01        |
+| campus-dorms-01 | 10.137.255.13/30 | 10.137.255.14/30 | campus-datacenter-01 |
 
 PTP = Point-to-Point interface
 
@@ -93,20 +126,20 @@ Note: this may also work with colima, bit I haven't tried it, as of yet.
 2. If you are doing the devcontainer approach, you will need to install a couple of packages by running the following commands:
 
 ```
-cd lab1
+cd lab2
 pip install -r requirements.txt
 ```
 
 3. Load the Containerlab topology with the following command:
 
 ```
-clab deploy -t lab1-topology.yaml
+clab deploy -t lab2-topology.yaml
 ```
 
 4. Next, run the Ansible playbook to configure the lab:
 
 ```
-ansible-playbook playbook-lab1.yaml
+ansible-playbook playbook-lab2.yaml
 ```
 
 You will get an output similar to the following:
@@ -123,7 +156,7 @@ campus-library-01          : ok=2    changed=2    unreachable=0    failed=0    s
 5. To destroy the lab, run the following command:
 
 ```
-clab destroy -t lab1-topology.yaml
+clab destroy -t 2-topology.yaml
 ```
 
 #### Devconatiner-Installation
@@ -167,3 +200,11 @@ ping vrf MGMT ip 192.168.121.14
 ```
 
 You will be able to ping the OOB / Management IP addresses of all of the devices in the lab.
+
+2. SSH into the in-band loopback port
+
+```
+ping 10.137.255.131
+```
+
+You will now be able to ping the In-band Management IP / Loopback addresses of all of the OSPF-enabled devices in the lab.

@@ -1,4 +1,4 @@
-- name: Launch Lab1 Environment
+- name: Launch Lab2 Environment
   hosts: arista_switches
   gather_facts: no
   connection: network_cli
@@ -6,7 +6,7 @@
   tasks:
     - name: load configuration from file
       arista.eos.eos_config:
-        src: host_vars/{{ inventory_hostname }}-lab1.cfg
+        src: host_vars/{{ inventory_hostname }}-lab2.cfg
 
     - name: Save the configuration
       arista.eos.eos_config:

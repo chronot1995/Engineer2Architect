@@ -56,3 +56,6 @@ I am accepting PRs on this repo. Here's a couple that I will aim for in the futu
 Optional:
 
 1. Ansible Vault for passwords, rather than the defaults
+2. Lab2 Improvement - Create with /31s
+3. Lab2 Improvement - Create with Unnumbered Interfaces
+4. Open Nagios directly into the hosts panel
