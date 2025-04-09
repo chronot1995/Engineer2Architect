@@ -1,0 +1,13 @@
+- name: Launch Lab3 Environment - Arista Switches
+  hosts: arista_switches
+  gather_facts: no
+  connection: network_cli
+
+  tasks:
+    - name: load configuration from file
+      arista.eos.eos_config:
+        src: host_vars/{{ inventory_hostname }}-lab3.cfg
+
+    - name: Save the configuration
+      arista.eos.eos_config:
+        save_when: always

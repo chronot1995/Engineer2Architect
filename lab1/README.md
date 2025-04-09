@@ -3,14 +3,14 @@
 ### Table-of-Contents
 
 - [LAB1](#lab1)
-    - [Table-of-Contents](#table-of-contents)
-    - [Lab1 Goals](#lab1-goals)
-    - [Network-Diagram](#network-diagram)
-    - [Network-Outline](#network-outline)
-    - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
-      - [Devconatiner-Installation](#devconatiner-installation)
-    - [Ansible-Debugging](#ansible-debugging)
-    - [Validate-Configuration](#validate-configuration)
+  - [Table-of-Contents](#table-of-contents)
+  - [Lab1 Goals](#lab1-goals)
+  - [Network-Diagram](#network-diagram)
+  - [Network-Outline](#network-outline)
+  - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
+    - [Devconatiner-Installation](#devconatiner-installation)
+  - [Ansible-Debugging](#ansible-debugging)
+  - [Validate-Configuration](#validate-configuration)
 
 ### Lab1 Goals
 

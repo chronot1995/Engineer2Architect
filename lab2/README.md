@@ -11,6 +11,7 @@
       - [Devconatiner-Installation](#devconatiner-installation)
     - [Ansible-Debugging](#ansible-debugging)
     - [Validate-Configuration](#validate-configuration)
+    - [ANSWERS TO THE QUESTIONS](#answers-to-the-questions)
 
 ### Lab2 Goals
 
@@ -109,10 +110,10 @@ Loopbacks: 10.137.255.128/25
 
 | Router #1       | PTP-Link IP #1   | PTP-Link IP #2   | Router #2            |
 | --------------- | ---------------- | ---------------- | -------------------- |
-| isp-edge-01     | 192.0.2.1/30  | 192.0.2.2/30  | campus-edge-01       |
+| isp-edge-01     | 192.0.2.1/30     | 192.0.2.2/30     | campus-edge-01       |
 | campus-edge-01  | 10.137.255.1/30  | 10.137.255.2/30  | campus-dorms-01      |
-| campus-dorms-01 | 10.137.255.5/30  | 10.137.255.6/30 | campus-library-01    |
-| campus-dorms-01 | 10.137.255.9/30 | 10.137.255.10/30 | campus-law-01        |
+| campus-dorms-01 | 10.137.255.5/30  | 10.137.255.6/30  | campus-library-01    |
+| campus-dorms-01 | 10.137.255.9/30  | 10.137.255.10/30 | campus-law-01        |
 | campus-dorms-01 | 10.137.255.13/30 | 10.137.255.14/30 | campus-datacenter-01 |
 
 PTP = Point-to-Point interface
@@ -156,7 +157,7 @@ campus-library-01          : ok=2    changed=2    unreachable=0    failed=0    s
 5. To destroy the lab, run the following command:
 
 ```
-clab destroy -t 2-topology.yaml
+clab destroy -t lab2-topology.yaml
 ```
 
 #### Devconatiner-Installation
@@ -208,3 +209,28 @@ ping 10.137.255.131
 ```
 
 You will now be able to ping the In-band Management IP / Loopback addresses of all of the OSPF-enabled devices in the lab.
+
+### ANSWERS TO THE QUESTIONS
+
+To work around the Nagios monitoring issue, one will need to adjust the routing table on the Nagios server itself.
+
+Log into the Nagios server using this command:
+
+```
+docker exec -it clab-lab2-nagios /bin/bash
+```
+
+On the box, run the following command:
+
+```
+ip route show
+```
+
+To change the routing table, run the following:
+
+```
+ip route del default via 192.168.121.1 dev eth0
+ip route add default via 10.137.121.1 dev eth1
+```
+
+The Nagios server will now be able to ping the loopbacks of all the campus switches.
