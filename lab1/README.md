@@ -5,6 +5,7 @@
 - [LAB1](#lab1)
   - [Table-of-Contents](#table-of-contents)
   - [Lab1 Goals](#lab1-goals)
+  - [Questions](#questions)
   - [Network-Diagram](#network-diagram)
   - [Network-Outline](#network-outline)
   - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
@@ -25,7 +26,7 @@ Password: nagios
 
 Click the "Hosts" on the left-hand side to see what is currently being monitored.
 
-Questions:
+### Questions
 
 i. Does the amount of devices you're seeing in Nagios match the [Network Diagram](#Network-Diagram) and [Network Outline](#Network-Outline) below?
 
@@ -93,8 +94,7 @@ Note: this may also work with colima, bit I haven't tried it, as of yet.
 2. If you are doing the devcontainer approach, you will need to install a couple of packages by running the following commands:
 
 ```
-cd lab1
-pip install -r requirements.txt
+./launch-lab.sh
 ```
 
 3. Load the Containerlab topology with the following command:

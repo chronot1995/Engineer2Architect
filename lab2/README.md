@@ -3,15 +3,16 @@
 ### Table-of-Contents
 
 - [LAB2](#lab2)
-    - [Table-of-Contents](#table-of-contents)
-    - [Lab2 Goals](#lab2-goals)
-    - [Network-Diagram](#network-diagram)
-    - [Network-Outline](#network-outline)
-    - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
-      - [Devconatiner-Installation](#devconatiner-installation)
-    - [Ansible-Debugging](#ansible-debugging)
-    - [Validate-Configuration](#validate-configuration)
-    - [ANSWERS TO THE QUESTIONS](#answers-to-the-questions)
+  - [Table-of-Contents](#table-of-contents)
+  - [Lab2 Goals](#lab2-goals)
+  - [Questions](#questions)
+  - [Network-Diagram](#network-diagram)
+  - [Network-Outline](#network-outline)
+  - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
+    - [Devconatiner-Installation](#devconatiner-installation)
+  - [Ansible-Debugging](#ansible-debugging)
+  - [Validate-Configuration](#validate-configuration)
+  - [ANSWERS TO THE QUESTIONS](#answers-to-the-questions)
 
 ### Lab2 Goals
 
@@ -19,7 +20,7 @@
 2. Answer questions regarding this topology
 3. Understand the output in the Nagios monitoring server
 
-Questions:
+### Questions
 
 i. Network Analysis
 
@@ -127,8 +128,7 @@ Note: this may also work with colima, bit I haven't tried it, as of yet.
 2. If you are doing the devcontainer approach, you will need to install a couple of packages by running the following commands:
 
 ```
-cd lab2
-pip install -r requirements.txt
+./launch-lab.sh
 ```
 
 3. Load the Containerlab topology with the following command:

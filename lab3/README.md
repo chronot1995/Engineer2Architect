@@ -5,6 +5,7 @@
 - [LAB3](#lab3)
   - [Table-of-Contents](#table-of-contents)
   - [Lab3 Goals](#lab3-goals)
+  - [Questions](#questions)
   - [Network-Diagram](#network-diagram)
   - [Network-Outline](#network-outline)
   - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
@@ -18,11 +19,11 @@
 1. Enable BGP on campus-edge-01 with Arista cEOS
 2. Enable BGP on the isp-edge-01 with Free Range Routing (FRR)
 3. Answer questions regarding this topology
-4. Understand the output in the Nagios monitoring server
+4. Understand the new output in the Nagios monitoring server, compared to Lab 2
 
 ==
 
-Questions:
+### Questions
 
 1. Ping from the FRR router
 
@@ -173,8 +174,7 @@ Note: this may also work with colima, bit I haven't tried it, as of yet.
 2. If you are doing the devcontainer approach, you will need to install a couple of packages by running the following commands:
 
 ```
-cd lab3
-pip install -r requirements.txt
+./launch-lab.sh
 ```
 
 3. Load the Containerlab topology with the following command:

@@ -2,18 +2,80 @@
 
 ### Table-of-Contents
 
+- [LAB4](#lab4)
+  - [Table-of-Contents](#table-of-contents)
+  - [Lab4 Goals](#lab4-goals)
+  - [Description](#description)
+  - [Questions](#questions)
+  - [Network-Diagram](#network-diagram)
+  - [Network-Outline](#network-outline)
+  - [Lab-Setup-and-Configuration](#lab-setup-and-configuration)
+    - [Devconatiner-Installation](#devconatiner-installation)
+  - [Ansible-Debugging](#ansible-debugging)
+  - [Validate-Configuration](#validate-configuration)
+  - [ANSWERS TO THE QUESTIONS](#answers-to-the-questions)
+
+### Lab4 Goals
+
+1. Create an OSPF connection between the "old network" and the "new network"
+2. Move the OSPF connection from campus-dorms-01 to campus-new-dorms-01
+3. Enable BGP on campus-edge-01 with Arista cEOS
+4. Enable BGP on the isp-edge-01 with Free Range Routing (FRR)
+5. Answer questions regarding this topology
+6. Understand the new output in the Nagios monitoring server, compared to Lab 2
+
+### Description
+
+Let's take a step back on what we have accomplished so far.
+
+In lab1 the major design feature was the spanned VLAN that created a large instability. This design also prevented other vendors from cleaning fitting into the design.
+
+We rectified this in lab2. We moved the underlying topology to a routed network using OSPF. OSPF is a well known protocols supported on every major platform.
+
+In lab3 we enabled dynamic routing / BGP at the edge of the network.
+
+And now in lab4 the steps we have taken, especially in lab 2, allow us to add a whole new network to the topology and interconnect them with ease.
+
+The goal of this lab is to interconnect the new and old networks. This is important because once a network is using standard protocols, it allows you as the architect to deploy a new vendor
+
+### Questions
+
 Here is the routing table from Lab3:
 
-The goal of this is to stand up a parallel network and to move
-THis is only possible because of the work that we have done up to this point.
+```
+Gateway of last resort:
+ O E2     0.0.0.0/0 [110/1]
+           via 10.137.255.1, Ethernet1
 
-If we go all the way back to lab1, the spanned VLAN design prevented us from coming up with this
+ O        10.137.121.0/24 [110/20]
+           via 10.137.255.14, Ethernet4
+ C        10.137.255.0/30
+           directly connected, Ethernet1
+ C        10.137.255.4/30
+           directly connected, Ethernet2
+ C        10.137.255.8/30
+           directly connected, Ethernet3
+ C        10.137.255.12/30
+           directly connected, Ethernet4
+ O        10.137.255.129/32 [110/20]
+           via 10.137.255.1, Ethernet1
+ C        10.137.255.130/32
+           directly connected, Loopback0
+ O        10.137.255.131/32 [110/20]
+           via 10.137.255.6, Ethernet2
+ O        10.137.255.132/32 [110/20]
+           via 10.137.255.10, Ethernet3
+ O        10.137.255.133/32 [110/20]
+           via 10.137.255.14, Ethernet4
+```
 
-In lab2, we moved hte underlying toplogy to a routed network using OSPF, which is an open standards.
+1. Logging into campus-new-dorms-01, what is the new path to the reach the legacy campus-datacenter-01?
 
-In lab3 we tweaked the
+2. Does the egress traffic off the campus still go through the campus-dorms-01?
 
-and now here we are in lab4, with the design moved to a routed, dynamic design, we can easily add a new vendor or new type of router to this design and systematically move resources off of the legacy network unto the new network.
+3. How does the legacy campus-datacenter-01 receive the default route?
+
+4. The Nagios server output is different than in lab3. In this lab, the configuration is correctly configured with reachability to all hosts, why?
 
 ### Network-Diagram
 
@@ -91,8 +153,7 @@ Note: this may also work with colima, bit I haven't tried it, as of yet.
 2. If you are doing the devcontainer approach, you will need to install a couple of packages by running the following commands:
 
 ```
-cd lab4
-pip install -r requirements.txt
+./launch-lab.sh
 ```
 
 3. Load the Containerlab topology with the following command:
@@ -175,3 +236,11 @@ ping 10.137.255.131
 You will now be able to ping the In-band Management IP / Loopback addresses of all of the OSPF-enabled devices in the lab.
 
 ### ANSWERS TO THE QUESTIONS
+
+1. In the previous labs, the campus-dorms-01 was the center of the network topology. Now, it is a spoke off of the new network.
+
+2. No, in this lab we changed the network egress to go through the campus-new-dorms-01 router, rather than the legacy campus-dorms-01 router.
+
+3. The default route is still learned and propagated through OSPF. From the campus-datacenter-01 perspective, the next hop for the default traffic is still coming from the campus-dorms-01 router. We did not make any changes to the underlying topology on the legacy side. As in question 2, when traffic reaches the campus-dorms-01 router, it now will take the connection to the new network and egress from there.
+
+4. Linux has an underlying route table, similar to a switch or a router. In this lab, the management network is only for the 192.168.121.0/24 network. The default route for all other traffic is now the leg connected to the campus-datacenter-01 network. This configuration is one way to have a Linux server with legs in multiple networks. In lab3, the default route was in the management network and had no way to reach the loopbacks of the routers.
