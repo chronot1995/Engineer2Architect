@@ -1,4 +1,4 @@
-- name: Launch Lab3 Environment - Arista Switches
+- name: Launch Lab4 Environment - Arista Switches
   hosts: arista_switches
   gather_facts: no
   connection: network_cli
