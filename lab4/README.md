@@ -17,7 +17,7 @@
 
 ### Lab4 Goals
 
-1. Create an OSPF connection between the "old network" and the "new network"
+1. Create an OSPF connection between the "legacy network" and the "new network"
 2. Move the OSPF connection from campus-dorms-01 to campus-new-dorms-01
 3. Enable BGP on campus-edge-01 with Arista cEOS
 4. Enable BGP on the isp-edge-01 with Free Range Routing (FRR)

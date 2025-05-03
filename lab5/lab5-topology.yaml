@@ -1,0 +1,79 @@
+---
+name: lab4
+#version: 1.0.0
+#description: >
+#  This is the topology used for Lab 4.
+
+mgmt:
+  network: mgmt
+  ipv4-subnet: 192.168.121.0/24
+
+topology:
+  kinds:
+    ceos:
+      startup-config: ../ceos_lab_template/ceos.cfg.tpl
+      image: ceos:4.33.1-EFT3
+      exec:
+        - sleep 10
+        - FastCli -p 15 -c 'security pki key generate rsa 4096 eAPI.key'
+        - FastCli -p 15 -c 'security pki certificate generate self-signed eAPI.crt key eAPI.key generate rsa 4096 validity 30000 parameters common-name eAPI'
+  nodes:
+    isp-edge-01:
+      kind: linux
+      image: quay.io/frrouting/frr:10.1.3
+      mgmt-ipv4: 192.168.121.10
+      binds:
+        - host_vars/daemons:/etc/frr/daemons
+        - host_vars/isp-edge-01-frr-lab4.conf:/etc/frr/frr.conf
+      exec:
+        - sleep 5
+        - ip route del default via 192.168.121.1 dev eth0
+    campus-edge-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.121.11
+    campus-new-dorms-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.121.12
+    campus-new-library-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.121.13
+    #      ports:
+    #        - 2222:222
+    campus-new-law-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.121.14
+    campus-new-datacenter-01:
+      kind: ceos
+      mgmt-ipv4: 192.168.121.15
+    campus-new-datacenter-02:
+      kind: ceos
+      mgmt-ipv4: 192.168.121.16
+    nagios:
+      kind: linux
+      mgmt-ipv4: 192.168.121.16
+      image: manios/nagios:4.5.9
+      ports:
+        - 8080:80
+      binds:
+        - nagios.cfg:/opt/nagios/etc/nagios.cfg
+        - lab4-nagios.cfg:/opt/nagios/etc/objects/lab4-nagios.cfg
+      exec:
+        - sleep 5
+        - ip link set dev eth1 address aa:cc:16:16:16:16
+        - ip addr add 10.137.121.16/24 dev eth1
+        - ip route del default via 192.168.121.1 dev eth0
+        - ip route add default via 10.137.121.1 dev eth1
+  #        - echo 'NagiosAdmin!' | passwd --stdin root
+  #        - apk add openssh
+  #        - ssh-keygen -A
+  #        - exec /usr/sbin/sshd -D -e "$@" &
+
+  links:
+    - endpoints: ["isp-edge-01:eth1", "campus-edge-01:eth1"]
+    - endpoints: ["campus-edge-01:eth2", "campus-new-dorms-01:eth2"]
+    - endpoints: ["campus-new-dorms-01:eth3", "campus-new-law-01:eth3"]
+    - endpoints: ["campus-new-law-01:eth4", "campus-new-datacenter-02:eth4"]
+    - endpoints: ["campus-new-datacenter-01:eth5", "campus-new-datacenter-02:eth5"]
+    - endpoints: ["campus-new-library-01:eth6", "campus-new-datacenter-02:eth6"]
+    - endpoints: ["campus-new-dorms-01:eth7", "campus-new-library-01:eth7"]
+    - endpoints: ["nagios:eth1", "campus-datacenter-01:eth11"]
