@@ -1,5 +1,5 @@
 ---
-name: lab4
+name: lab5
 #version: 1.0.0
 #description: >
 #  This is the topology used for Lab 4.
@@ -24,7 +24,7 @@ topology:
       mgmt-ipv4: 192.168.121.10
       binds:
         - host_vars/daemons:/etc/frr/daemons
-        - host_vars/isp-edge-01-frr-lab4.conf:/etc/frr/frr.conf
+        - host_vars/isp-edge-01-frr-lab5.conf:/etc/frr/frr.conf
       exec:
         - sleep 5
         - ip route del default via 192.168.121.1 dev eth0
@@ -50,30 +50,53 @@ topology:
       mgmt-ipv4: 192.168.121.16
     nagios:
       kind: linux
-      mgmt-ipv4: 192.168.121.16
+      mgmt-ipv4: 192.168.121.17
       image: manios/nagios:4.5.9
       ports:
         - 8080:80
       binds:
         - nagios.cfg:/opt/nagios/etc/nagios.cfg
-        - lab4-nagios.cfg:/opt/nagios/etc/objects/lab4-nagios.cfg
+        - lab5-nagios.cfg:/opt/nagios/etc/objects/lab5-nagios.cfg
       exec:
         - sleep 5
-        - ip link set dev eth1 address aa:cc:16:16:16:16
-        - ip addr add 10.137.121.16/24 dev eth1
+        - ip link set dev eth1 address aa:bb:cc:17:17:17
+        - ip addr add 10.137.121.17/24 dev eth1
         - ip route del default via 192.168.121.1 dev eth0
         - ip route add default via 10.137.121.1 dev eth1
-  #        - echo 'NagiosAdmin!' | passwd --stdin root
-  #        - apk add openssh
-  #        - ssh-keygen -A
-  #        - exec /usr/sbin/sshd -D -e "$@" &
+    #        - echo 'NagiosAdmin!' | passwd --stdin root
+    #        - apk add openssh
+    #        - ssh-keygen -A
+    #        - exec /usr/sbin/sshd -D -e "$@" &
+    server01:
+      kind: linux
+      mgmt-ipv4: 192.168.121.18
+      image: alpine:3.21.3
+      exec:
+        - sleep 5
+        - ip link set dev eth1 address aa:bb:cc:18:18:18
+        - ip addr add 10.137.11.18/24 dev eth1
+        - ip route del default via 192.168.121.1 dev eth0
+        - ip route add default via 10.137.11.1 dev eth1
+    server02:
+      kind: linux
+      mgmt-ipv4: 192.168.121.19
+      image: alpine:3.21.3
+      exec:
+        - sleep 5
+        - ip link set dev eth1 address aa:bb:cc:19:19:19
+        - ip addr add 10.137.22.19/24 dev eth1
+        - ip route del default via 192.168.121.1 dev eth0
+        - ip route add default via 10.137.22.1 dev eth1
 
   links:
     - endpoints: ["isp-edge-01:eth1", "campus-edge-01:eth1"]
     - endpoints: ["campus-edge-01:eth2", "campus-new-dorms-01:eth2"]
     - endpoints: ["campus-new-dorms-01:eth3", "campus-new-law-01:eth3"]
     - endpoints: ["campus-new-law-01:eth4", "campus-new-datacenter-02:eth4"]
-    - endpoints: ["campus-new-datacenter-01:eth5", "campus-new-datacenter-02:eth5"]
-    - endpoints: ["campus-new-library-01:eth6", "campus-new-datacenter-02:eth6"]
+    - endpoints:
+        ["campus-new-datacenter-01:eth5", "campus-new-datacenter-02:eth5"]
+    - endpoints: ["campus-new-library-01:eth6", "campus-new-datacenter-01:eth6"]
     - endpoints: ["campus-new-dorms-01:eth7", "campus-new-library-01:eth7"]
-    - endpoints: ["nagios:eth1", "campus-datacenter-01:eth11"]
+    - endpoints: ["nagios:eth1", "campus-new-datacenter-01:eth11"]
+    - endpoints: ["server01:eth1", "campus-new-datacenter-01:eth14"]
+    - endpoints: ["server02:eth1", "campus-new-datacenter-02:eth14"]

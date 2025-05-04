@@ -124,15 +124,15 @@ Point-to-Points: 10.137.255.0/25
 Loopbacks: 10.137.255.128/25
 ```
 
-| Router Name          | OOB Management IP | Type        |
-| -------------------- | ----------------- | ----------- |
-| isp-edge-01          | 192.168.121.10    | FRR         |
-| campus-edge-01       | 192.168.121.11    | Arista cEOS |
-| campus-dorms-01      | 192.168.121.12    | Arista cEOS |
-| campus-library-01    | 192.168.121.13    | Arista cEOS |
-| campus-law-01        | 192.168.121.14    | Arista cEOS |
-| campus-datacenter-01 | 192.168.121.15    | Arista cEOS |
-| nagios               | 192.168.121.16    | Linux       |
+| Router Name          | OOB Management IP | Type         |
+| -------------------- | ----------------- | ------------ |
+| isp-edge-01          | 192.168.121.10    | FRR          |
+| campus-edge-01       | 192.168.121.11    | Arista cEOS  |
+| campus-dorms-01      | 192.168.121.12    | Arista cEOS  |
+| campus-library-01    | 192.168.121.13    | Arista cEOS  |
+| campus-law-01        | 192.168.121.14    | Arista cEOS  |
+| campus-datacenter-01 | 192.168.121.15    | Arista cEOS  |
+| nagios               | 192.168.121.16    | Alpine Linux |
 
 | Router Name          | Loopback IP    | Type        |
 | -------------------- | -------------- | ----------- |
@@ -164,6 +164,10 @@ PTP = Point-to-Point interface
 | -------------- | -------------- | ---------- |
 | isp-edge-01    | 192.0.2.1/30   | 65000      |
 | campus-edge-01 | 192.0.2.2/30   | 65464      |
+
+| Server Name | Server Interface | Router Name          | Router Interface | Server IP     | Type         |
+| ----------- | ---------------- | -------------------- | ---------------- | ------------- | ------------ |
+| nagios      | eth1             | campus-datacenter-01 | eth11            | 10.137.121.17 | Alpine Linux |
 
 ### Lab-Setup-and-Configuration
 

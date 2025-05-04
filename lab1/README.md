@@ -65,15 +65,15 @@ I found the diagrams from 15 years ago and built the lab diagrams using the same
 
 ### Network-Outline
 
-| Router Name          | OOB Management IP | Type        |
-| -------------------- | ----------------- | ----------- |
-| isp-edge-01          | 192.168.121.10    | FRR         |
-| campus-edge-01       | 192.168.121.11    | Arista cEOS |
-| campus-dorms-01      | 192.168.121.12    | Arista cEOS |
-| campus-library-01    | 192.168.121.13    | Arista cEOS |
-| campus-law-01        | 192.168.121.14    | Arista cEOS |
-| campus-datacenter-01 | 192.168.121.15    | Arista cEOS |
-| nagios               | 192.168.121.16    | Linux       |
+| Router Name          | OOB Management IP | Type         |
+| -------------------- | ----------------- | ------------ |
+| isp-edge-01          | 192.168.121.10    | FRR          |
+| campus-edge-01       | 192.168.121.11    | Arista cEOS  |
+| campus-dorms-01      | 192.168.121.12    | Arista cEOS  |
+| campus-library-01    | 192.168.121.13    | Arista cEOS  |
+| campus-law-01        | 192.168.121.14    | Arista cEOS  |
+| campus-datacenter-01 | 192.168.121.15    | Arista cEOS  |
+| nagios               | 192.168.121.16    | Alpine Linux |
 
 | Router #1       | PTP-Link #1 | PTP-Link #2 | Router #2            |
 | --------------- | ----------- | ----------- | -------------------- |
@@ -84,6 +84,10 @@ I found the diagrams from 15 years ago and built the lab diagrams using the same
 | campus-dorms-01 | eth4        | eth4        | campus-datacenter-01 |
 
 PTP = Point-to-Point interface
+
+| Server Name | Server Interface | Router Name          | Router Interface | Server IP     | Type         |
+| ----------- | ---------------- | -------------------- | ---------------- | ------------- | ------------ |
+| nagios      | eth1             | campus-datacenter-01 | eth11            | 10.137.121.17 | Alpine Linux |
 
 ### Lab-Setup-and-Configuration
 
